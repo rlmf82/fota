@@ -12,17 +12,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import man.fota.request.dto.UserRequest;
 
 @Entity
-@Table(name = "user", schema = "fota") 
+@Table(name = "user")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "LOGIN")
+    @Column(name = "login")
     private String login;
     
-    @Column(name = "PASSWORD")
+    @Column(name = "password")
     private String password;
 
     public User() {}
