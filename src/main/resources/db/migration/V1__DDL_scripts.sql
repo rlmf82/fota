@@ -22,6 +22,6 @@ CREATE TABLE feature (
 CREATE TABLE feature_artifact(
   id BIGINT AUTO_INCREMENT  PRIMARY KEY,
   feature_id BIGINT NOT NULL,
-  required_artifact_id BIGINT NOT NULL,
-  forbidden_artifact_id BIGINT NOT NULL
+  required_artifact_id BIGINT,
+  forbidden_artifact_id BIGINT
 );
