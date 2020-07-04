@@ -1,5 +1,7 @@
 package man.fota.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,13 +11,15 @@ import javax.persistence.Table;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import man.fota.request.dto.UserRequest;
+import man.fota.request.dto.UserRequestDTO;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements Serializable{
 
-    @Id
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -51,7 +55,7 @@ public class User {
 		this.password = password;
 	}
 	
-	public static User transform(UserRequest request, PasswordEncoder passwordEncoder) {
+	public static User transform(UserRequestDTO request, PasswordEncoder passwordEncoder) {
 		User user = new User();
 		user.setLogin(request.getLogin());
 		user.setPassword(passwordEncoder.encode(request.getPassword()));

@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import man.fota.entity.User;
 import man.fota.repository.UserRepository;
-import man.fota.request.dto.UsuarioCustom;
+import man.fota.request.dto.UsuarioCustomDTO;
 
 @Configuration
 @EnableWebSecurity
@@ -38,7 +38,7 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
             usuarioRepository.save(usuario);
         }
 
-        builder.userDetailsService(login -> new UsuarioCustom(repositorio.findByLogin(login)));
+        builder.userDetailsService(login -> new UsuarioCustomDTO(repositorio.findByLogin(login)));
     }
     
     @Bean  

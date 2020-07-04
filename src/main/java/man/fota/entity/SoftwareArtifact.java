@@ -7,4 +7,12 @@ import javax.persistence.Entity;
 @DiscriminatorValue("Software")
 public class SoftwareArtifact extends Artifact{
 
+	private static final long serialVersionUID = 1L;
+	
+	public SoftwareArtifact() {}
+	
+	public SoftwareArtifact(String code) {
+		super(code);
+	}
+	
 }

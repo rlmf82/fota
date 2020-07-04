@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import man.fota.entity.User;
 import man.fota.repository.UserRepository;
-import man.fota.request.dto.UserRequest;
+import man.fota.request.dto.UserRequestDTO;
 import man.fota.response.dto.UserResponse;
 import man.fota.service.UserService;
 
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@PostMapping
-	public void save(UserRequest request) {
+	public void save(UserRequestDTO request) {
 		userRepository.saveAndFlush(User.transform(request, passwordEncoder));
 	}
 

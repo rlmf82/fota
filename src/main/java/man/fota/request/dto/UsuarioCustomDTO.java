@@ -7,14 +7,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import man.fota.entity.User;
 
-public class UsuarioCustom implements UserDetails {
+public class UsuarioCustomDTO implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 
 	private String login;
     private String password;
 
-    public UsuarioCustom(User usuario) {
+    public UsuarioCustomDTO(User usuario) {
         this.login = usuario.getLogin();
         this.password = usuario.getPassword();
     }

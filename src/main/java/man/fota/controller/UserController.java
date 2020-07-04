@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import man.fota.request.dto.UserRequest;
+import man.fota.request.dto.UserRequestDTO;
 import man.fota.response.dto.UserResponse;
 import man.fota.service.UserService;
 
@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @PostMapping
-    public void save(@Valid @RequestBody UserRequest request) {
+    public void save(@Valid @RequestBody UserRequestDTO request) {
     	userService.save(request);
     }
 }

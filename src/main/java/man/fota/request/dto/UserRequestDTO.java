@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 import man.fota.validation.LoginAlreadyExist;
 
-public class UserRequest implements Serializable{
+public class UserRequestDTO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
