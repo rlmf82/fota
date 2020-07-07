@@ -13,8 +13,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "feature")
-public class Feature implements Serializable{
+@Table(name = "feature_requirement")
+public class FeatureRequirement implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
@@ -25,7 +25,7 @@ public class Feature implements Serializable{
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Artifact> requiredArtifact;
     
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Artifact> forbiddenArtifact;
     
 	public Long getId() {

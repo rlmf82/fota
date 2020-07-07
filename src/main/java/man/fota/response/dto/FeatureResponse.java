@@ -4,12 +4,18 @@ import java.io.Serializable;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import man.fota.entity.Feature;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import man.fota.entity.FeatureRequirement;
+
+@JsonInclude(Include.NON_NULL)
 public class FeatureResponse implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
+	private Long id;
+	
     private Set<ArtifactResponse> requiredArtifact;
     
     private Set<ArtifactResponse> forbiddenArtifact;
@@ -30,7 +36,15 @@ public class FeatureResponse implements Serializable{
 		this.forbiddenArtifact = forbiddenArtifact;
 	}
 
-	public static FeatureResponse transform(Feature feature) {
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public static FeatureResponse transform(FeatureRequirement feature) {
 		Set<ArtifactResponse> required = null;
 		Set<ArtifactResponse> forbidden = null;
 		
@@ -57,4 +71,13 @@ public class FeatureResponse implements Serializable{
 		
 		return response;
 	}
+
+	public static FeatureResponse tranformId(FeatureRequirement feature) {
+		
+		FeatureResponse response = new FeatureResponse();
+		response.setId(feature.getId());
+		
+		return response;
+	}
+	
 }

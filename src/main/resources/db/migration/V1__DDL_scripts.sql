@@ -14,15 +14,16 @@ CREATE TABLE artifact (
   UNIQUE KEY ARTIFACT_UNIQUE_CODE (code)
 );
 
-CREATE TABLE feature (
+CREATE TABLE feature_requirement (
   id BIGINT AUTO_INCREMENT  PRIMARY KEY
 );
 
-CREATE TABLE feature_artifact(
+CREATE TABLE feature_requirement_artifact(
   id BIGINT AUTO_INCREMENT  PRIMARY KEY,
-  feature_id BIGINT NOT NULL,
+  feature_requirement_id BIGINT NOT NULL,
   required_artifact_id BIGINT,
-  forbidden_artifact_id BIGINT
+  forbidden_artifact_id BIGINT,
+  foreign key (feature_requirement_id) references feature_requirement(id)
 );
 
 CREATE TABLE property(
@@ -34,7 +35,7 @@ CREATE TABLE truck (
   id BIGINT AUTO_INCREMENT  PRIMARY KEY,
   vin VARCHAR(17) NOT NULL,
   feature_id BIGINT,
-  foreign key (feature_id) references feature(id)
+  foreign key (feature_id) references feature_requirement(id)
 );
 
 CREATE TABLE file (

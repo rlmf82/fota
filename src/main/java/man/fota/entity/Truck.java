@@ -27,7 +27,7 @@ public class Truck implements Serializable{
     
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="feature_id")
-    private Feature feature;
+    private FeatureRequirement feature;
 
 	public Long getId() {
 		return id;
@@ -45,11 +45,11 @@ public class Truck implements Serializable{
 		VIN = vIN;
 	}
 
-	public Feature getFeature() {
+	public FeatureRequirement getFeature() {
 		return feature;
 	}
 
-	public void setFeature(Feature feature) {
+	public void setFeature(FeatureRequirement feature) {
 		this.feature = feature;
 	}
 }

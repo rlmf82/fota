@@ -1,21 +1,24 @@
 package man.fota.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import man.fota.service.CSVReaderService;
+import man.fota.response.dto.FeatureResponse;
+import man.fota.service.FeatureService;
 
 @RestController
 @RequestMapping("features")
 public class FeatureController {
 
     @Autowired
-    private CSVReaderService csvService;
+    private FeatureService featureService;
 
     @GetMapping
-    public void list() throws Exception {
-        csvService.processFiles();
+    public List<FeatureResponse> getAll() throws Exception {
+        return featureService.getAll();
     }
 }

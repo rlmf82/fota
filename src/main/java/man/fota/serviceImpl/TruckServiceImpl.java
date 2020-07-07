@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import man.fota.entity.Artifact;
 import man.fota.entity.ArtifactTypeEnum;
-import man.fota.entity.Feature;
+import man.fota.entity.FeatureRequirement;
 import man.fota.entity.HardwareArtifact;
 import man.fota.entity.SoftwareArtifact;
 import man.fota.entity.Truck;
@@ -77,7 +77,7 @@ public class TruckServiceImpl implements TruckService {
 	}
 
 	private void saveTruck(String key, Set<Artifact> artifacts) {
-		final Feature feature;
+		final FeatureRequirement feature;
 		Truck truck = null;
 		
 		Optional<Truck> returnedTruck = repository.findByVin(key);
@@ -88,7 +88,7 @@ public class TruckServiceImpl implements TruckService {
 		
 		if(!returnedTruck.isPresent()) {
 			truck = new Truck();
-			feature = new Feature();
+			feature = new FeatureRequirement();
 			
 			truck.setVIN(key);
 			truck.setFeature(feature);
