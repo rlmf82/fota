@@ -52,11 +52,13 @@ public class CSVReaderServiceImpl implements CSVReaderService {
 	public void process(Path file) {
 		Reader reader = null;
 		try {
+			logger.info("Starting process to file: " + file.getFileName().toString());
 			String reprocess = this.propertyService.getProperty(PropertyKeyEnum.REPROCESS).getValue();
 			
 			Boolean alreadyProcessed = fileService.exists(file.getFileName().toString());
 			
 			if(alreadyProcessed && !Boolean.valueOf(reprocess)) {
+				logger.info(file.getFileName().toString() + " was already processed");
 				saveLogFile(file.getFileName().toString(), Messages.MESSAGE_NOT_PROCESSED);
 				return;
 			}
@@ -72,7 +74,8 @@ public class CSVReaderServiceImpl implements CSVReaderService {
 			
 			fileService.saveOrUpdate(request);
 			
-			saveLogFile(file.getFileName().toString(), Messages.MESSAGE_SUCCESS);			
+			saveLogFile(file.getFileName().toString(), Messages.MESSAGE_SUCCESS);
+			logger.info(file.getFileName().toString() + " processed sucessfully");
 		} catch (IOException e) {
 			logger.error(e.getMessage());
 		}

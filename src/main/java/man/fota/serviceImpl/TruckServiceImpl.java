@@ -1,11 +1,13 @@
 package man.fota.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,11 +18,14 @@ import man.fota.entity.Feature;
 import man.fota.entity.HardwareArtifact;
 import man.fota.entity.SoftwareArtifact;
 import man.fota.entity.Truck;
+import man.fota.exception.TruckNotFound;
 import man.fota.repository.TruckRepository;
 import man.fota.request.dto.RegistryRequest;
 import man.fota.response.dto.ArtifactResponse;
+import man.fota.response.dto.TruckResponse;
 import man.fota.service.ArtifactService;
 import man.fota.service.TruckService;
+import man.fota.util.ArtifactMode;
 
 @Service
 public class TruckServiceImpl implements TruckService {
@@ -105,5 +110,47 @@ public class TruckServiceImpl implements TruckService {
 		}
 
 		repository.saveAndFlush(truck);
+	}
+
+	@Override
+	public List<TruckResponse> getAll() {
+		List<TruckResponse> response = new ArrayList<>();
+		
+		List<Truck> trucks = repository.findAll();
+		
+		if(trucks != null) {
+			response = trucks
+					.stream()
+					.map(TruckResponse::transform)
+					.collect(Collectors.toList());
+		}
+		
+		return response;
+	}
+
+	@Override
+	public TruckResponse getByVIN(String vin) throws TruckNotFound {
+		Optional<Truck> truck = repository.findByVin(vin);
+		
+		if(!truck.isPresent()) {
+			throw new TruckNotFound();
+		}
+		
+		return TruckResponse.transform(truck.get());
+	}
+
+	@Override
+	public Set<ArtifactResponse> getArtifactsByVIN(String vin, ArtifactMode mode) throws TruckNotFound {
+		
+		Set<ArtifactResponse> response = new HashSet<>();
+		TruckResponse truck = getByVIN(vin);
+		
+		if(mode == ArtifactMode.INCOMPATIBLE) {
+			response.addAll(truck.getFeature().getForbiddenArtifact());
+		} else if(mode == ArtifactMode.INSTALLABLE) {
+			response.addAll(truck.getFeature().getRequiredArtifact());
+		} 
+		
+		return response;
 	}	
 }
