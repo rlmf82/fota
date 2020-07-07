@@ -36,3 +36,9 @@ CREATE TABLE truck (
   feature_id BIGINT,
   foreign key (feature_id) references feature(id)
 );
+
+CREATE TABLE file (
+  id BIGINT AUTO_INCREMENT  PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  last_execution TIMESTAMP NOT NULL
+);

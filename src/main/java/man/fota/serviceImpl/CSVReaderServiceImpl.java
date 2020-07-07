@@ -5,11 +5,14 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.opencsv.CSVReader;
@@ -17,25 +20,87 @@ import com.opencsv.CSVReader;
 import man.fota.entity.ArtifactTypeEnum;
 import man.fota.entity.PropertyKeyEnum;
 import man.fota.request.dto.RegistryRequest;
+import man.fota.request.dto.SaveOrUpdateFileRequest;
 import man.fota.service.CSVReaderService;
+import man.fota.service.FileService;
 import man.fota.service.PropertyService;
+import man.fota.util.Messages;
 
 @Service
 public class CSVReaderServiceImpl implements CSVReaderService {
 
 	private PropertyService propertyService;
 	
+	private FileService fileService;
+	
 	private TruckServiceImpl truckService;
 	
-	private final String folderPath;
-	private final String extension;
-		
-	public CSVReaderServiceImpl(PropertyService propertyService, TruckServiceImpl truckService) {
+	 private static final Logger logger = LoggerFactory.getLogger(CSVReaderServiceImpl.class);
+	
+	public CSVReaderServiceImpl(FileService fileService, PropertyService propertyService, TruckServiceImpl truckService) {
 		this.truckService = truckService;
 		this.propertyService = propertyService;
+		this.fileService = fileService;		
+	}
+	
+	public void processFiles() throws Exception {
+		List<Path> files = getFilesFromFolder();
 		
-		this.folderPath = this.propertyService.getProperty(PropertyKeyEnum.FOLDER_PATH).getValue();
-		this.extension = this.propertyService.getProperty(PropertyKeyEnum.EXTENSION).getValue();
+		files.forEach(file -> process(file));
+	}
+	
+	public void process(Path file) {
+		Reader reader = null;
+		try {
+			String reprocess = this.propertyService.getProperty(PropertyKeyEnum.REPROCESS).getValue();
+			
+			Boolean alreadyProcessed = fileService.exists(file.getFileName().toString());
+			
+			if(alreadyProcessed && !Boolean.valueOf(reprocess)) {
+				saveLogFile(file.getFileName().toString(), Messages.MESSAGE_NOT_PROCESSED);
+				return;
+			}
+			
+			reader = Files.newBufferedReader(file);
+			List<RegistryRequest> registries = read(reader, file.getFileName().toString());
+			
+			truckService.saveRegistries(registries);
+			
+			SaveOrUpdateFileRequest request = new SaveOrUpdateFileRequest();
+			request.setLastExecution(LocalDateTime.now());
+			request.setName(file.getFileName().toString());
+			
+			fileService.saveOrUpdate(request);
+			
+			saveLogFile(file.getFileName().toString(), Messages.MESSAGE_SUCCESS);			
+		} catch (IOException e) {
+			logger.error(e.getMessage());
+		}
+	}
+	
+	private void saveLogFile(String fileName, String message) throws IOException {
+		String folderPath = this.propertyService.getProperty(PropertyKeyEnum.FOLDER_PATH).getValue();
+		
+		message = message +" "+ LocalDateTime.now();
+		folderPath = folderPath + "\\" + fileName + ".log";
+		
+		Files.write(Paths.get(folderPath), message.getBytes());
+	}
+
+	public List<Path> getFilesFromFolder() throws IOException {
+		String folderPath = this.propertyService.getProperty(PropertyKeyEnum.FOLDER_PATH).getValue();
+		String extension = this.propertyService.getProperty(PropertyKeyEnum.EXTENSION).getValue();
+		
+		Stream<Path> path = Files.walk(Paths.get(folderPath));
+		
+		List<Path> paths = path
+				.filter(Files::isRegularFile)
+				.filter(file -> file.getFileName().toString().endsWith(extension))
+				.collect(Collectors.toList());
+		
+		path.close();
+		
+		return paths;
 	}
 	
 	private List<RegistryRequest> read(Reader reader, String filename) throws IOException {
@@ -61,37 +126,5 @@ public class CSVReaderServiceImpl implements CSVReaderService {
 	    csvReader.close();
 	    
 	    return list;
-	}
-	
-	public void processFiles() throws Exception {
-		List<Path> files = getFilesFromFolder();
-		
-		files.forEach(file -> process(file));
-	}
-	
-	public void process(Path file) {
-		Reader reader = null;
-		try {
-			reader = Files.newBufferedReader(file);
-			List<RegistryRequest> registries = read(reader, file.getFileName().toString());
-			
-			truckService.saveRegistries(registries);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	public List<Path> getFilesFromFolder() throws IOException {
-		Stream<Path> path = Files.walk(Paths.get(folderPath));
-		
-		List<Path> paths = path
-				.filter(Files::isRegularFile)
-				.filter(file -> file.getFileName().toString().endsWith(extension))
-				.collect(Collectors.toList());
-		
-		path.close();
-		
-		return paths;
 	}
 }
