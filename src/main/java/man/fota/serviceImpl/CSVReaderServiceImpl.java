@@ -1,5 +1,6 @@
 package man.fota.serviceImpl;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
@@ -85,7 +86,7 @@ public class CSVReaderServiceImpl implements CSVReaderService {
 		String folderPath = this.propertyService.getProperty(PropertyKeyEnum.FOLDER_PATH).getValue();
 		
 		message = message +" "+ LocalDateTime.now();
-		folderPath = folderPath + "\\" + fileName + ".log";
+		folderPath = folderPath + File.separator + fileName + ".log";
 		
 		Files.write(Paths.get(folderPath), message.getBytes());
 	}
