@@ -155,10 +155,10 @@ public class TruckServiceImpl implements TruckService {
 	}
 
 	@Override
-	public List<TruckResponse> getTrucksByArtifact(String code) {
+	public List<TruckResponse> getTrucksByArtifact(String code, ArtifactMode mode) {
 		
 		List<TruckResponse> response = new ArrayList<TruckResponse>();
-		List<Truck> trucks = repository.findByArtifact(code);
+		List<Truck> trucks = repository.findByArtifact(code, mode);
 		
 		if(trucks != null) {
 			response = trucks

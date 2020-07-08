@@ -12,6 +12,7 @@ import man.fota.response.dto.ArtifactResponse;
 import man.fota.response.dto.TruckResponse;
 import man.fota.service.ArtifactService;
 import man.fota.service.TruckService;
+import man.fota.util.ArtifactMode;
 
 @RestController
 @RequestMapping("features")
@@ -25,7 +26,17 @@ public class FeatureController {
         
     @GetMapping("/{feature}")
     public List<TruckResponse> getVinByArtifact(@PathVariable(name = "feature") String code) throws Exception {
-        return truckService.getTrucksByArtifact(code);
+        return truckService.getTrucksByArtifact(code, ArtifactMode.ALL);
+    }
+    
+    @GetMapping("/{feature}/incompatible")
+    public List<TruckResponse> getVinByIncompatibles(@PathVariable(name = "feature") String code) throws Exception {
+        return truckService.getTrucksByArtifact(code, ArtifactMode.INCOMPATIBLE);
+    }
+    
+    @GetMapping("/{feature}/installable")
+    public List<TruckResponse> getVinByInstallables(@PathVariable(name = "feature") String code) throws Exception {
+        return truckService.getTrucksByArtifact(code, ArtifactMode.INSTALLABLE);
     }
     
     @GetMapping

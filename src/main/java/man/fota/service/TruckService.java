@@ -15,7 +15,7 @@ public interface TruckService {
 
 	public List<TruckResponse> getAll();
 	
-	public List<TruckResponse> getTrucksByArtifact(String code);
+	public List<TruckResponse> getTrucksByArtifact(String code, ArtifactMode mode);
 	
 	public TruckResponse getByVIN(String vin) throws TruckNotFound;
 	
