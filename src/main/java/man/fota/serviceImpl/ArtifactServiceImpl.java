@@ -1,6 +1,9 @@
 package man.fota.serviceImpl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +28,22 @@ public class ArtifactServiceImpl implements ArtifactService {
 		}
 		
 		return null;
+	}
+
+	@Override
+	public List<ArtifactResponse> findAll() {
+		List<ArtifactResponse> response = new ArrayList<>();
+		
+		List<Artifact> artifacts = repository.findAll();
+		
+		if(artifacts != null) {
+			response = artifacts
+					.stream()
+					.map(ArtifactResponse::transform)
+					.collect(Collectors.toList());
+		}
+		
+		return response;
 	}
 
 	

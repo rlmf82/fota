@@ -11,14 +11,8 @@ public class ArtifactResponse implements Serializable{
 	private Long id;
 	
     private String code;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
+    
+    private String type;
 
 	public String getCode() {
 		return code;
@@ -28,10 +22,27 @@ public class ArtifactResponse implements Serializable{
 		this.code = code;
 	}
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public static ArtifactResponse transform(Artifact artifact) {
 		ArtifactResponse response = new ArtifactResponse();
 		response.setId(artifact.getId());
 		response.setCode(artifact.getCode());
+		response.setType(artifact.getDiscriminatorName());
 		
 		return response;
 	}

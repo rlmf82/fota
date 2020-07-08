@@ -54,6 +54,8 @@ public abstract class Artifact implements Serializable{
 		return code.hashCode();
 	}
 
+	public abstract String getDiscriminatorName();
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

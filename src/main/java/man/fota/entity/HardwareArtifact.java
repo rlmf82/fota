@@ -15,4 +15,9 @@ public class HardwareArtifact extends Artifact{
 		super(code);
 	}
 	
+	@Override
+	public String getDiscriminatorName() {
+		return "HARDWARE";
+	}
+	
 }

@@ -14,8 +14,6 @@ public class FeatureResponse implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
-	
     private Set<ArtifactResponse> requiredArtifact;
     
     private Set<ArtifactResponse> forbiddenArtifact;
@@ -34,14 +32,6 @@ public class FeatureResponse implements Serializable{
 
 	public void setForbiddenArtifact(Set<ArtifactResponse> forbiddenArtifact) {
 		this.forbiddenArtifact = forbiddenArtifact;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public static FeatureResponse transform(FeatureRequirement feature) {
@@ -71,13 +61,4 @@ public class FeatureResponse implements Serializable{
 		
 		return response;
 	}
-
-	public static FeatureResponse tranformId(FeatureRequirement feature) {
-		
-		FeatureResponse response = new FeatureResponse();
-		response.setId(feature.getId());
-		
-		return response;
-	}
-	
 }

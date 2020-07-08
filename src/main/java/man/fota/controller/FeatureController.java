@@ -4,21 +4,32 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import man.fota.response.dto.FeatureResponse;
-import man.fota.service.FeatureService;
+import man.fota.response.dto.ArtifactResponse;
+import man.fota.response.dto.TruckResponse;
+import man.fota.service.ArtifactService;
+import man.fota.service.TruckService;
 
 @RestController
 @RequestMapping("features")
 public class FeatureController {
 
     @Autowired
-    private FeatureService featureService;
+    private ArtifactService artifactService;
 
+    @Autowired
+    private TruckService truckService;
+        
+    @GetMapping("/{feature}")
+    public List<TruckResponse> getVinByArtifact(@PathVariable(name = "feature") String code) throws Exception {
+        return truckService.getTrucksByArtifact(code);
+    }
+    
     @GetMapping
-    public List<FeatureResponse> getAll() throws Exception {
-        return featureService.getAll();
+    public List<ArtifactResponse> getAll() throws Exception {
+        return artifactService.findAll();
     }
 }

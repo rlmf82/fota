@@ -14,5 +14,10 @@ public class SoftwareArtifact extends Artifact{
 	public SoftwareArtifact(String code) {
 		super(code);
 	}
+
+	@Override
+	public String getDiscriminatorName() {
+		return "SOFTWARE";
+	}
 	
 }

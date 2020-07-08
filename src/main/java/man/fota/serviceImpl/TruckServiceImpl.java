@@ -152,5 +152,21 @@ public class TruckServiceImpl implements TruckService {
 		} 
 		
 		return response;
+	}
+
+	@Override
+	public List<TruckResponse> getTrucksByArtifact(String code) {
+		
+		List<TruckResponse> response = new ArrayList<TruckResponse>();
+		List<Truck> trucks = repository.findByArtifact(code);
+		
+		if(trucks != null) {
+			response = trucks
+					.stream()
+					.map(truck -> TruckResponse.transform(truck, code))
+					.collect(Collectors.toList());
+		}
+		
+		return response;
 	}	
 }
