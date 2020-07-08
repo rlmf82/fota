@@ -4,8 +4,8 @@ public class PropertyNotFound extends BusinessException{
 
 	private static final long serialVersionUID = 1L;
 
-	public PropertyNotFound() {
-		super("Property not found");
+	public PropertyNotFound(String propertyName) {
+		super("Property not found: " + propertyName);
 	}
 	
 }
