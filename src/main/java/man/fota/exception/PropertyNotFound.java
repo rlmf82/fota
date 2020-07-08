@@ -1,6 +1,6 @@
 package man.fota.exception;
 
-public class PropertyNotFound extends Exception{
+public class PropertyNotFound extends BusinessException{
 
 	private static final long serialVersionUID = 1L;
 
