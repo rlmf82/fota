@@ -4,14 +4,7 @@ Here you can find the information about how to execute this application and deta
 
 ============================= EXECUTION ==============================
 
-This application can be executed in two ways:
-
-1) Using maven and running command: mvn spring-boot:run
-
-2) Run in Docker:
- 
-- 2.1) Build container: docker build . -t man:fota
-- 2.2) Run image: docker run --publish=8080:8080 man:fota
+This application can be executed using maven command: mvn spring-boot:run
 
 ============================= PROPERTIES =============================
 
