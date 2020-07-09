@@ -21,7 +21,6 @@ public class Scheduler{
 
 		try {
 			readerService.processFiles();
-			
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
