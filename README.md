@@ -52,7 +52,7 @@ User-controller - You can set a user to be used on authentication by JWS. To thi
 Features-controller - Services related to search operations to features;
 Vehicles-Controller - Services related to search operations to vehicles;
 
-============================== DATA BASE ==============================
+============================== DATABASE ==============================
 
 This application uses an H2 Database. You can access the structure through the URL below: 
 
