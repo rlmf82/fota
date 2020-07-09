@@ -52,6 +52,8 @@ User-controller - You can set a user to be used on authentication by JWS. To thi
 Features-controller - Services related to search operations to features;
 Vehicles-Controller - Services related to search operations to vehicles;
 
+On the project's directory, you can find a list of all service calls to the Postman. The file name is FOTA.postman_collection.json.
+
 ============================== DATABASE ==============================
 
 This application uses an H2 Database. You can access the structure through the URL below: 
