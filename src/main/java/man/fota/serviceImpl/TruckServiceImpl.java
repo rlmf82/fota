@@ -10,6 +10,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import man.fota.entity.Artifact;
@@ -155,18 +157,10 @@ public class TruckServiceImpl implements TruckService {
 	}
 
 	@Override
-	public List<TruckResponse> getTrucksByArtifact(String code, ArtifactMode mode) {
+	public Page<TruckResponse> getTrucksByArtifact(String code, ArtifactMode mode, PageRequest page) {
 		
-		List<TruckResponse> response = new ArrayList<TruckResponse>();
-		List<Truck> trucks = repository.findByArtifact(code, mode);
+		Page<TruckResponse> trucks = repository.findByArtifact(code, mode, page);
 		
-		if(trucks != null) {
-			response = trucks
-					.stream()
-					.map(truck -> TruckResponse.transform(truck, code))
-					.collect(Collectors.toList());
-		}
-		
-		return response;
+		return trucks;
 	}	
 }

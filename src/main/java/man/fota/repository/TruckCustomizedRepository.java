@@ -1,12 +1,13 @@
 package man.fota.repository;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
-import man.fota.entity.Truck;
+import man.fota.response.dto.TruckResponse;
 import man.fota.util.ArtifactMode;
 
 public interface TruckCustomizedRepository{
 
-	public List<Truck> findByArtifact(String code, ArtifactMode mode);
+	public Page<TruckResponse> findByArtifact(String code, ArtifactMode mode, PageRequest page);
 	
 }

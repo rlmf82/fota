@@ -3,6 +3,9 @@ package man.fota.service;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+
 import man.fota.exception.TruckNotFound;
 import man.fota.request.dto.RegistryRequest;
 import man.fota.response.dto.ArtifactResponse;
@@ -15,7 +18,7 @@ public interface TruckService {
 
 	public List<TruckResponse> getAll();
 	
-	public List<TruckResponse> getTrucksByArtifact(String code, ArtifactMode mode);
+	public Page<TruckResponse> getTrucksByArtifact(String code, ArtifactMode mode, PageRequest page);
 	
 	public TruckResponse getByVIN(String vin) throws TruckNotFound;
 	
