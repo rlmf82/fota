@@ -4,7 +4,16 @@ Here you can find the information about how to execute this application and deta
 
 ============================= EXECUTION ==============================
 
-This application can be executed using maven command: mvn spring-boot:run
+This application can be executed in two ways:
+
+1) Using maven and running command: mvn spring-boot:run
+
+2) Run in Docker:
+ 
+- 2.1) Build container: docker build . -t man:fota
+- 2.2) docker run --name=fota -d -v ~<HOST-DIRECTORY>:/var/fota -p 8080:8080 man:fota
+
+OBS.: It is necessary to create a <HOST-DIRECTORY> and replace the path in the link above.
 
 ============================= PROPERTIES =============================
 

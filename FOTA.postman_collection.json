@@ -265,7 +265,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"key\":\"FOLDER_PATH\",\r\n    \"value\":\"/tmp\"\r\n}",
+							"raw": "{\r\n    \"key\":\"FOLDER_PATH\",\r\n    \"value\":\"/var/fota\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -304,6 +304,32 @@
 								"fota",
 								"properties",
 								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "CSV",
+			"item": [
+				{
+					"name": "Force CSV Reader",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/fota/read",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fota",
+								"read"
 							]
 						}
 					},
